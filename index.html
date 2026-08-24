@@ -34,8 +34,8 @@
   .wrap{max-width:1120px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:210px 1fr;gap:28px;}
   /* nav */
   nav{
-    position:sticky;top:0;align-self:start;height:100vh;overflow:auto;
-    padding:28px 0;
+    position:sticky;top:24px;align-self:start;
+    padding:28px 0 0;
   }
   nav .brand{font-size:13px;color:var(--faint);letter-spacing:.02em;margin-bottom:16px;}
   nav a{
@@ -57,6 +57,7 @@
   section{
     background:var(--card);border:1px solid var(--line);border-radius:14px;
     padding:24px 26px;margin:16px 0;
+    scroll-margin-top:24px;
   }
   section > h2{
     font-size:20px;margin:0 0 14px;color:var(--accent);
@@ -133,12 +134,12 @@
     <div class="brand">臭氧除菌机 · 回国进度</div>
     <div class="navlinks">
       <a href="#s1">1　目前的进展</a>
-      <a href="#s3">2　商品本身</a>
-      <a href="#s4">3　海关关心的两件事</a>
-      <a href="#s5">4　和厂家的沟通</a>
-      <a href="#s6">5　三条路详情对照</a>
-      <a href="#s10">6　结论：怎么选</a>
-      <a href="#s11">7　请宣宣确认的几件事</a>
+      <a href="#s2">2　商品本身</a>
+      <a href="#s3">3　海关关心的两件事</a>
+      <a href="#s4">4　和厂家的沟通</a>
+      <a href="#s5">5　三条路详情对照</a>
+      <a href="#s6">6　结论：怎么选</a>
+      <a href="#s7">7　请宣宣确认的几件事</a>
     </div>
   </nav>
 
@@ -148,7 +149,7 @@
       <h1>Ozone Smash 臭氧除菌机 · 日本采购回国方案</h1>
     </header>
 
-    <section id="s1" class="concl">
+    <section id="s1">
       <h2><span class="num">1</span>目前的进展</h2>
       <ul class="clean">
         <li><span class="hl">商品尚未购买。</span></li>
@@ -157,7 +158,7 @@
       </ul>
     </section>
 
-    <section id="s3">
+    <section id="s2">
       <h2><span class="num">2</span>商品本身</h2>
       <table class="kv">
         <tr><td class="k">品名</td><td>电解臭氧水除菌喷雾本体（Ozone Smash / オゾンスマッシュ）</td></tr>
@@ -173,7 +174,7 @@
       </table>
     </section>
 
-    <section id="s4">
+    <section id="s3">
       <h2><span class="num">3</span>海关最关心的两件事</h2>
       <p>里面有没有液体、电池算不算超标——这两件事决定托运、邮政、物流能不能接。</p>
       <div class="cards2">
@@ -190,7 +191,7 @@
       </div>
     </section>
 
-    <section id="s5">
+    <section id="s4">
       <h2><span class="num">4</span>和厂家的沟通</h2>
       <table class="kv">
         <tr><td class="k">收件方</td><td>株式会社MEI（MEIOZONE）</td></tr>
@@ -200,7 +201,7 @@
       </table>
     </section>
 
-    <section id="s6">
+    <section id="s5">
       <h2><span class="num">5</span>三条路详情对照</h2>
       <div class="scroll">
         <table class="cmp">
@@ -234,14 +235,14 @@
       </div>
     </section>
 
-    <section id="s10" class="concl">
+    <section id="s6" class="concl">
       <h2><span class="num">6</span>结论：怎么选</h2>
       <p class="lead">我建议，如果有合适的带货人选，第一个商品建议走<b>方案A（熟人托运）</b>。如果想要长期买，需要考虑B和C。</p>
     </section>
 
-    <section id="s11">
+    <section id="s7">
       <h2><span class="num">7</span>请宣宣确认的几件事</h2>
-      <p style="color:var(--muted);">商品还没买。下面这几件事定下来，日本这边就可以马上下单。</p>
+      <p style="color:var(--muted);">商品还没买。下面这几件事定下来，我就可以马上下单。</p>
       <div class="ask">
         <div class="q">1. 第一个是否同意走方案A？</div>
         <p class="a">如果同意，希望卡在哪一波人：8月底 Kevin 父 / 9月初桐桐 / 9月中郑总 / 10月小游 / 10月底沈。</p>
@@ -261,17 +262,64 @@
 </div>
 
 <script>
-  const links=[...document.querySelectorAll('nav a')];
-  const secs=links.map(a=>document.querySelector(a.getAttribute('href')));
-  const obs=new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        const id='#'+e.target.id;
-        links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')===id));
-      }
+  const links = [...document.querySelectorAll('nav a')];
+  const items = links
+    .map(a => ({ link: a, section: document.querySelector(a.getAttribute('href')) }))
+    .filter(i => i.section);
+
+  let currentId = null;
+  function setActive(id) {
+    if (id === currentId) return;
+    currentId = id;
+    items.forEach(({ link }) => {
+      link.classList.toggle('active', link.getAttribute('href') === '#' + id);
     });
-  },{rootMargin:'-45% 0px -50% 0px',threshold:0});
-  secs.forEach(s=>s&&obs.observe(s));
+  }
+
+  // A clicked entry stays highlighted until the reader scrolls again, because
+  // short trailing sections can't reach the anchor line once the page bottoms out.
+  let pinnedId = null;
+
+  function pickActive() {
+    if (pinnedId) return;
+    const line = window.scrollY + 140;
+    let active = null;
+    let nearest = Infinity;
+    for (const { section } of items) {
+      const top = section.offsetTop;
+      const bottom = top + section.offsetHeight;
+      if (top <= line && line < bottom) { active = section.id; break; }
+      const gap = Math.abs(top - line);
+      if (gap < nearest) { nearest = gap; active = section.id; }
+    }
+    if (active) setActive(active);
+  }
+
+  let queued = false;
+  function onScroll() {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(() => { queued = false; pickActive(); });
+  }
+
+  items.forEach(({ link, section }) => {
+    link.addEventListener('click', () => {
+      pinnedId = section.id;
+      setActive(section.id);
+    });
+  });
+
+  ['wheel', 'touchmove', 'keydown'].forEach(evt => {
+    window.addEventListener(evt, () => {
+      if (!pinnedId) return;
+      pinnedId = null;
+      pickActive();
+    }, { passive: true });
+  });
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  pickActive();
 </script>
 </body>
 </html>
