@@ -107,6 +107,14 @@
   .people{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;}
   .people .chip{background:#f2ede2;border-radius:9px;padding:8px 12px;font-size:14px;min-width:108px;}
   .people .chip b{display:block;font-size:12px;color:var(--muted);font-weight:600;}
+  /* manufacturer reply */
+  .reply{margin-top:16px;padding:16px 18px;border-left:3px solid var(--accent);background:#f7f5ef;border-radius:0 8px 8px 0;}
+  .reply-head{font-size:12px;font-weight:600;color:var(--accent);margin-bottom:10px;letter-spacing:.02em;}
+  .reply p{font-size:14.5px;color:#3d3a34;margin:0 0 8px;}
+  .reply p:last-child{margin-bottom:0;}
+  .shot{margin:14px 0 0;}
+  .shot img{display:block;width:100%;border:1px solid var(--line);border-radius:8px;background:#fff;}
+  .shot figcaption{margin-top:6px;font-size:12px;color:var(--faint);}
   /* conclusion */
   section.concl{background:var(--accent-soft);border-color:#cdddd6;}
   section.concl h2{color:var(--accent);}
@@ -145,7 +153,7 @@
 
   <main>
     <header class="hero">
-      <div class="kicker">现状进展与物流方案 · 2026.08.24</div>
+      <div class="kicker">现状进展与物流方案 · 2026.08.25</div>
       <h1>Ozone Smash 臭氧除菌机 · 日本采购回国方案</h1>
     </header>
 
@@ -153,8 +161,8 @@
       <h2><span class="num">1</span>目前的进展</h2>
       <ul class="clean">
         <li><span class="hl">商品尚未购买。</span></li>
-        <li>已发两封邮件给厂家（株式会社MEI）询问有无液体及电池型号，暂无回复。</li>
-        <li>资料初步判断：商品内无液体；电池型号未知，但应该不会大于笔记本电脑电池。</li>
+        <li><span class="hl">厂家已回复（8月25日）</span>：产品内不含液体；内置锂电池 3200mAh / 3.6V，约 11.5Wh。</li>
+        <li>正在向厂家索取 SDS（安全数据表）。</li>
       </ul>
     </section>
 
@@ -170,7 +178,8 @@
         <tr><td class="k">大约人民币</td><td>约 6,980 元 / 台（按本周平均汇率，约 1 日元 = 0.0423 人民币）</td></tr>
         <tr><td class="k">尺寸 / 重量</td><td>约 83 × 125 × 275 mm，空机约 410g</td></tr>
         <tr><td class="k">水箱</td><td>350ml。使用时加水、当场电解生成臭氧水；运输时应排空</td></tr>
-        <tr><td class="k">电源</td><td>内置锂离子电池，充电后无线使用。型号、容量未知</td></tr>
+        <tr><td class="k">电源</td><td>内置可充电锂离子电池：额定容量 3200mAh，平均电压 3.6V，充电电压 4.20±0.03V（约 11.5Wh，厂家提供）</td></tr>
+        <tr><td class="k">附件</td><td>随机附带滤芯，用于把日本自来水过滤成机器需要的纯水</td></tr>
       </table>
     </section>
 
@@ -179,14 +188,14 @@
       <p>里面有没有液体、电池算不算超标——这两件事决定托运、邮政、物流能不能接。</p>
       <div class="cards2">
         <div class="mini ok">
-          <span class="pill">已基本判断清楚</span>
+          <span class="pill">厂家已确认</span>
           <h3>1. 有没有液体？</h3>
-          <p>出货时空箱，机内没有预装液体，也没有化学药剂。臭氧水是到了以后加水才现场生成的。从公开资料看：商品本身不含液体。</p>
+          <p>厂家明确回复：产品内不含液体。臭氧水是加水后在机器内部现场生成的，出货时是空的。</p>
         </div>
-        <div class="mini warn">
-          <span class="pill">厂家尚未书面确认</span>
+        <div class="mini ok">
+          <span class="pill">厂家已确认</span>
           <h3>2. 电池是什么？</h3>
-          <p>公开资料只写「内置锂离子电池」，型号、容量还无法判断。按目前能看到的信息，应该不会大于笔记本电脑电池，但还没拿到厂家书面确认。</p>
+          <p>内置可充电锂离子电池，3200mAh / 3.6V，换算约 11.5Wh。民航对装在设备里的锂电池界线是 100Wh，这个远低于标准，差不多是一部手机的电池。</p>
         </div>
       </div>
     </section>
@@ -195,10 +204,21 @@
       <h2><span class="num">4</span>和厂家的沟通</h2>
       <table class="kv">
         <tr><td class="k">收件方</td><td>株式会社MEI（MEIOZONE）</td></tr>
-        <tr><td class="k">已发邮件</td><td>8月21日、8月24日。目前没有回复。</td></tr>
+        <tr><td class="k">已发邮件</td><td>8月21日、8月24日。</td></tr>
         <tr><td class="k">问了什么</td><td>机器里是否含液体；内置锂电池的型号、类型。</td></tr>
-        <tr><td class="k">下一步</td><td>等到周二如果还没回复，让Kevin打电话去问。</td></tr>
+        <tr><td class="k">对方回复</td><td>8月25日，由株式会社MEI 宫村利幸回复。</td></tr>
+        <tr><td class="k">下一步</td><td>已再去信索取 SDS（安全数据表）。</td></tr>
       </table>
+
+      <div class="reply">
+        <div class="reply-head">厂家回信要点</div>
+        <p><b>1. 产品内不含液体（原料水）。</b>机器是以纯水为原料，在内部生成用于杀菌、除臭的臭氧水。随机附带滤芯，用于把日本自来水处理成机器需要的纯水（离子交换水）。</p>
+        <p><b>2. 内置可充电锂离子电池。</b>额定容量 3200mAh，平均电压 3.6V，充电电压 4.20±0.03V。</p>
+        <figure class="shot">
+          <img src="mei-reply.png" alt="株式会社MEI 宫村利幸 2026年8月25日回信截图" loading="lazy" />
+          <figcaption>厂家回信原件（8月25日）</figcaption>
+        </figure>
+      </div>
     </section>
 
     <section id="s5">
