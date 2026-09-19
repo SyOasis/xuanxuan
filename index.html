@@ -76,6 +76,23 @@
   ul.clean li:last-child{border-bottom:0;}
   ul.clean li::before{content:"";position:absolute;left:2px;top:18px;width:7px;height:7px;border-radius:50%;background:var(--accent);}
   .hl{background:#fbf6ea;padding:0 3px;border-radius:3px;}
+  .board{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0 8px;}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 14px 12px;}
+  .stat.ok{background:var(--ok-bg);border-color:#c9dccf;}
+  .stat.go{background:var(--accent-soft);border-color:#cdddd6;}
+  .stat.wait{background:var(--amber-bg);border-color:#ecdcbb;}
+  .stat .lab{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:4px;}
+  .stat .val{font-size:18px;font-weight:700;line-height:1.3;color:var(--ink);}
+  .stat .sub{font-size:12px;color:var(--muted);margin-top:4px;}
+  .units{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0 4px;}
+  .unit{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:#faf7f0;}
+  .unit .who{font-size:13px;font-weight:600;color:var(--accent);margin-bottom:8px;}
+  .unit .big{font-size:17px;font-weight:700;margin-bottom:8px;}
+  .unit p{font-size:14px;color:#3d3a34;margin:0;}
+  @media (max-width:820px){
+    .board{grid-template-columns:1fr 1fr;}
+    .units{grid-template-columns:1fr;}
+  }
   /* key-value table */
   table.kv{width:100%;border-collapse:collapse;}
   table.kv td{padding:9px 6px;border-bottom:1px solid var(--line);vertical-align:top;font-size:15px;}
@@ -113,7 +130,24 @@
   .reply p{font-size:14.5px;color:#3d3a34;margin:0 0 8px;}
   .reply p:last-child{margin-bottom:0;}
   .shot{margin:14px 0 0;}
-  .shot img{display:block;width:100%;border:1px solid var(--line);border-radius:8px;background:#fff;}
+  .shot img{display:block;width:100%;max-height:260px;object-fit:contain;object-position:top;cursor:zoom-in;border:1px solid var(--line);border-radius:8px;background:#fff;}
+  .shot img:hover{border-color:var(--accent);}
+  /* photo gallery + lightbox */
+  .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin:18px 0 0;}
+  .thumb{margin:0;}
+  .thumb img{
+    display:block;width:100%;height:136px;object-fit:cover;cursor:zoom-in;
+    border:1px solid var(--line);border-radius:10px;background:#fff;transition:.15s;
+  }
+  .thumb img:hover{border-color:var(--accent);transform:translateY(-2px);}
+  .thumb figcaption{margin-top:6px;font-size:12px;color:var(--faint);text-align:center;}
+  .gal-hint{font-size:13px;color:var(--faint);margin:12px 0 0;}
+  .lb{position:fixed;inset:0;z-index:50;display:none;background:rgba(20,19,17,.92);padding:40px 32px 56px;align-items:center;justify-content:center;}
+  .lb.open{display:flex;}
+  .lb img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 10px 40px rgba(0,0,0,.5);}
+  .lb-close{position:absolute;top:18px;right:24px;width:38px;height:38px;border:0;border-radius:50%;background:rgba(255,255,255,.15);color:#fff;font-size:22px;cursor:pointer;line-height:1;}
+  .lb-close:hover{background:rgba(255,255,255,.3);}
+  .lb-cap{position:absolute;bottom:22px;left:0;right:0;text-align:center;color:#e9e4d8;font-size:13px;}
   .shot figcaption{margin-top:6px;font-size:12px;color:var(--faint);}
   /* conclusion */
   section.concl{background:var(--accent-soft);border-color:#cdddd6;}
@@ -141,43 +175,117 @@
   <nav>
     <div class="brand">臭氧除菌机 · 回国进度</div>
     <div class="navlinks">
-      <a href="#s1">1　目前的进展</a>
-      <a href="#s2">2　商品本身</a>
-      <a href="#s3">3　海关关心的两件事</a>
-      <a href="#s4">4　和厂家的沟通</a>
-      <a href="#s5">5　三条路详情对照</a>
-      <a href="#s6">6　结论：怎么选</a>
-      <a href="#s7">7　请宣宣确认的几件事</a>
+      <a href="#s1">1　第一批发货</a>
+      <a href="#s2">2　目前的进展</a>
+      <a href="#s3">3　商品本身</a>
+      <a href="#s4">4　海关关心的两件事</a>
+      <a href="#s5">5　和厂家的沟通</a>
+      <a href="#s6">6　三条路详情对照</a>
+      <a href="#s7">7　结论：怎么选</a>
+      <a href="#s8">8　请宣宣确认的几件事</a>
     </div>
   </nav>
 
   <main>
     <header class="hero">
-      <div class="kicker">现状进展与物流方案 · 2026.08.25</div>
+      <div class="kicker">现状进展与物流方案 · 2026.09.19</div>
       <h1>Ozone Smash 臭氧除菌机 · 日本采购回国方案</h1>
+      <div class="board">
+        <div class="stat ok">
+          <div class="lab">采购</div>
+          <div class="val">三台已买齐</div>
+          <div class="sub">第 1 台 8/27 · 第 2、3 台 9/9</div>
+        </div>
+        <div class="stat ok">
+          <div class="lab">货款</div>
+          <div class="val">已结清，含运费</div>
+          <div class="sub">人民币由院长经宣宣传来</div>
+        </div>
+        <div class="stat wait">
+          <div class="lab">第 1 台</div>
+          <div class="val">邮局跟进中</div>
+          <div class="sub">9/19 11:02 寄出 · 12:30 来电 · 在等消息</div>
+        </div>
+        <div class="stat wait">
+          <div class="lab">第 2、3 台</div>
+          <div class="val">在沈家，墨田区</div>
+          <div class="sub">等第一台消息 · 没问题则 9/20 或 9/21 再寄一台</div>
+        </div>
+      </div>
     </header>
 
     <section id="s1">
-      <h2><span class="num">1</span>目前的进展</h2>
-      <ul class="clean">
-        <li><span class="hl">已下单 1 台</span>（8月27日，Amazon Pay 付款，实付 167,000 日元）。目前状态：发货准备中。</li>
-        <li><span class="hl">厂家已回复（8月25日）</span>：产品内不含液体；内置锂电池 3200mAh / 3.6V，约 11.5Wh。</li>
-        <li>问了 SDS，厂家回复<span class="hl">没有</span>：这是制造臭氧水的装置，不是化学品，所以没有 SDS。对方反问需要的具体是哪一份。</li>
-        <li>已经和张哥确认桐桐的行程中。</li>
-        <li>8月26日去确认日本邮政海运能不能处理。</li>
-      </ul>
+      <h2><span class="num">1</span>第一批发货 · 第 1 台</h2>
+      <p class="lead">第 1 台在 <b>9月19日 11:02</b> 由 Kevin 从千叶县松户市寄出，日本邮政上门取件，走国际小包航空便，收件人是杭州西湖区黄院长。取件当时没提问题；<b>当天 12:30 左右邮局来电</b>，现在还在等消息。</p>
+
+      <table class="kv">
+        <tr><td class="k">寄出时间</td><td>2026年9月19日 11:02</td></tr>
+        <tr><td class="k">寄件人</td><td>千叶县松户市 Kevin</td></tr>
+        <tr><td class="k">收件人</td><td>杭州西湖区黄院长</td></tr>
+        <tr><td class="k">寄件方式</td><td>日本邮政上门取件 · 国际小包航空便</td></tr>
+        <tr><td class="k">邮费</td><td>2,750 日元，现金。按 2kg 档计费，实称 1,029g</td></tr>
+        <tr><td class="k">实测重量</td><td>1,029 g</td></tr>
+        <tr><td class="k">包裹内容</td><td>机器本体，以及全部配件：滤芯、水箱、充电器、日文说明书等。<b>唯一没放进去的是原厂包装盒</b>，想让它看上去不是全新未拆。</td></tr>
+        <tr><td class="k">包装方式</td><td>不用原厂彩盒，机器和配件用气泡膜整体包裹后装入纸箱</td></tr>
+        <tr><td class="k">追踪号</td><td>CN133995890JP</td></tr>
+        <tr><td class="k">当前状态</td><td><span class="hl">邮局跟进中，还在等消息。</span></td></tr>
+      </table>
+
+      <div class="reply">
+        <div class="reply-head">9月19日 12:30 左右 · 邮局来电</div>
+        <p>上门取件时没有提出问题。大约一个半小时后，邮局打电话来，说了两件事：</p>
+        <p><b>1. 品名不能写「喷雾」。</b>写了会被退回。Kevin 按对方要求改了名字。</p>
+        <p><b>2. 问里面有没有充电电池。</b>Kevin 说明是<b>不可拆卸的内置充电电池</b>。</p>
+        <p>对方说如果还有问题会再联系 Kevin。<span class="hl">目前还在等消息，包裹是否已正常发出，还没最终确认。</span></p>
+      </div>
+
+      <div class="gallery">
+        <figure class="thumb"><img src="ship-1.jpg" alt="开箱：机器本体、随机附件与日文说明书" loading="lazy" /><figcaption>开箱 · 机器与说明书</figcaption></figure>
+        <figure class="thumb"><img src="ship-2.jpg" alt="机器用气泡膜整体包裹后装入纸箱" loading="lazy" /><figcaption>气泡膜打包</figcaption></figure>
+        <figure class="thumb"><img src="ship-3.jpg" alt="电子秤显示 1029 克" loading="lazy" /><figcaption>称重 · 1,029 g</figcaption></figure>
+        <figure class="thumb"><img src="ship-4.jpg" alt="日本邮政收据：国际小包航空便 2,750 日元" loading="lazy" /><figcaption>邮费收据 · 2,750 日元</figcaption></figure>
+      </div>
+      <p class="gal-hint">点一下图片可以看大图。</p>
     </section>
 
     <section id="s2">
-      <h2><span class="num">2</span>商品本身</h2>
+      <h2><span class="num">2</span>目前的进展</h2>
+      <div class="units">
+        <div class="unit">
+          <div class="who">第 1 台</div>
+          <div class="big">邮局跟进中 · 在等消息</div>
+          <p>9月19日 11:02 上门取件。当天 12:30 左右邮局来电：不能写「喷雾」，否则退回；并问了内置充电电池。Kevin 已改名，并说明是不可拆卸电池。对方说有问题再联系。详情见第 1 节。</p>
+        </div>
+        <div class="unit">
+          <div class="who">第 2、3 台</div>
+          <div class="big">在沈家 · 东京都墨田区</div>
+          <p>9月9日一起下单，9月17日到货，现在放在东京都墨田区沈家。等第一台具体消息，没问题的话下一台 9月20日或 9月21日马上寄出。</p>
+        </div>
+      </div>
+      <ul class="clean">
+        <li><span class="hl">三台已全部买齐。</span>第 1 台 8月27日下单；第 2、3 台 9月9日一起下单，9月17日到货。</li>
+        <li><span class="hl">三台货款已结清，含运费。</span>人民币由院长经宣宣转给我了。</li>
+        <li><span class="hl">厂家已确认（8月25日）</span>：产品内不含液体；内置锂电池 3200mAh / 3.6V，约 11.5Wh。这两项是海关最关心的，都没问题。</li>
+        <li><span class="hl">SDS 确认拿不到。</span>厂家说这台机器不是化学品、没有 SDS，锂电池那份也没能提供。</li>
+        <li><span class="hl">第 1 台 9月19日 11:02 上门取件寄出，当天 12:30 邮局来电跟进，目前还在等消息。</span>不能写「喷雾」、电池已向邮局说明是不可拆卸。详情见第 1 节。</li>
+        <li><span class="hl">第 2、3 台现在在东京都墨田区沈家。</span>等第一台具体消息，没问题则下一台 9月20日或 9月21日马上寄出。</li>
+        <li>方案A 暂时没有带货人选。桐桐可能 9 月底来日本，但始终没有确定。</li>
+        <li>方案B（京东）暂缓：京东要走公对公，这次是私人转账，手续对不上。等以后大批量进货再启动签约。</li>
+      </ul>
+    </section>
+
+    <section id="s3">
+      <h2><span class="num">3</span>商品本身</h2>
       <table class="kv">
         <tr><td class="k">品名</td><td>电解臭氧水除菌喷雾本体（Ozone Smash / オゾンスマッシュ）</td></tr>
         <tr><td class="k">店铺 / 厂家</td><td>MEIOZONE / 株式会社MEI</td></tr>
         <tr><td class="k">购买页</td><td><a href="https://meiozone.thebase.in/items/77520374" target="_blank">meiozone.thebase.in/items/77520374</a></td></tr>
-        <tr><td class="k">数量</td><td>一共 3 台。已下单 1 台，剩余 2 台待定</td></tr>
-        <tr><td class="k">采购状态</td><td><span class="hl">第 1 台已于 8月27日下单，发货准备中。</span></td></tr>
-        <tr><td class="k">日方标价</td><td>每台 165,000 日元（含税），日本国内运费 2,000 日元，实付 167,000 日元</td></tr>
-        <tr><td class="k">大约人民币</td><td>约 7,060 元 / 台（含日本国内运费；按 1 日元 = 0.0423 人民币折算）</td></tr>
+        <tr><td class="k">数量</td><td>一共 3 台，<span class="hl">已全部买齐</span></td></tr>
+        <tr><td class="k">采购状态</td><td>第 1 台 8月27日下单，9月19日 11:02 上门取件寄出，邮局跟进中。第 2、3 台 9月9日一起下单，9月17日到货，现在东京都墨田区沈家。等第一台消息，没问题则下一台 9月20日或 21日寄出。</td></tr>
+        <tr><td class="k">日方标价</td><td>每台 165,000 日元（含税），3 台商品合计 495,000 日元</td></tr>
+        <tr><td class="k">日本国内运费</td><td>第 1 台 2,000 日元；后 2 台一起下单、合并发货，也是 2,000 日元。运费共 4,000 日元</td></tr>
+        <tr><td class="k">实付合计</td><td>499,000 日元</td></tr>
+        <tr><td class="k">付款状态</td><td><span class="hl">三台已结清，含运费。</span>人民币由院长经宣宣转给我</td></tr>
         <tr><td class="k">尺寸 / 重量</td><td>约 83 × 125 × 275 mm，空机约 410g</td></tr>
         <tr><td class="k">水箱</td><td>350ml。使用时加水、当场电解生成臭氧水；运输时应排空</td></tr>
         <tr><td class="k">电源</td><td>内置可充电锂离子电池：额定容量 3200mAh，平均电压 3.6V，充电电压 4.20±0.03V（约 11.5Wh，厂家提供）</td></tr>
@@ -188,17 +296,24 @@
         <div class="reply-head">下单记录 · 第 1 台</div>
         <p><b>下单时间</b>：2026年8月27日 2:08　　<b>订单号</b>：F97A22C5EB22F527</p>
         <p><b>付款</b>：Amazon Pay，合计 167,000 日元（商品 165,000 + 运费 2,000）</p>
-        <p><b>配送</b>：ヤマト宅急便，先寄到我东京的住址，状态是发货准备中。</p>
+        <p><b>配送</b>：ヤマト宅急便，先寄到东京，<span class="hl">已签收</span>。这台 9月19日 11:02 转寄回国，邮局跟进中。</p>
         <figure class="shot">
           <img src="order-1.png" alt="订单信息：下单时间、订单号、付款方式与金额" loading="lazy" />
           <img src="order-2.png" alt="购买商品明细：电解臭氧水除菌喷雾 1 点" loading="lazy" style="margin-top:8px;" />
-          <figcaption>下单页面截图（个人地址、电话已裁去）</figcaption>
+          <figcaption>第 1 台下单截图（个人地址、电话已裁去）</figcaption>
         </figure>
+      </div>
+
+      <div class="reply">
+        <div class="reply-head">下单记录 · 第 2、3 台</div>
+        <p><b>下单时间</b>：2026年9月9日　　两台一起买，合并发货</p>
+        <p><b>到货</b>：9月17日签收，现在东京都墨田区沈家。等第一台具体消息，没问题则下一台 9月20日或 21日马上寄出。</p>
+        <p><b>日本国内运费</b>：2,000 日元（两台合寄，和第一台单寄一样贵）</p>
       </div>
     </section>
 
-    <section id="s3">
-      <h2><span class="num">3</span>海关最关心的两件事</h2>
+    <section id="s4">
+      <h2><span class="num">4</span>海关最关心的两件事</h2>
       <p>里面有没有液体、电池算不算超标——这两件事决定托运、邮政、物流能不能接。</p>
       <div class="cards2">
         <div class="mini ok">
@@ -214,13 +329,14 @@
       </div>
     </section>
 
-    <section id="s4">
-      <h2><span class="num">4</span>和厂家的沟通</h2>
+    <section id="s5">
+      <h2><span class="num">5</span>和厂家的沟通</h2>
       <table class="kv">
         <tr><td class="k">收件方</td><td>株式会社MEI（MEIOZONE）</td></tr>
         <tr><td class="k">已发邮件</td><td>8月21日、8月24日询问液体和电池；8月25日索取 SDS。</td></tr>
         <tr><td class="k">对方回复</td><td>8月25日两封，均由株式会社MEI 宫村利幸回复。</td></tr>
-        <tr><td class="k">下一步</td><td>回信说明需要的是内置锂电池的 SDS 与 UN38.3 运输测试报告；同时告知对方机器的使用场所。</td></tr>
+        <tr><td class="k">SDS 结果</td><td><span class="hl">确认拿不到。</span>机器本身不是化学品所以没有 SDS，内置锂电池那份厂家也提供不了。</td></tr>
+        <tr><td class="k">下一步</td><td>不再向厂家追 SDS，改为拿电池规格（3200mAh / 3.6V / 约 11.5Wh）直接去问日本邮政能不能收。</td></tr>
       </table>
 
       <div class="reply">
@@ -244,8 +360,8 @@
       </div>
     </section>
 
-    <section id="s5">
-      <h2><span class="num">5</span>三条路详情对照</h2>
+    <section id="s6">
+      <h2><span class="num">6</span>三条路详情对照</h2>
       <div class="scroll">
         <table class="cmp">
           <thead>
@@ -257,21 +373,21 @@
               <td>近期可能回国的熟人：<ul style="margin: 4px 0 0; padding-left: 20px;"><li>8月底 Kevin父</li><li>9月初 桐桐？</li><li>9月中旬 上海郑总</li><li>10月 小游</li><li>10月底 沈</li></ul></td>
               <td>简单直接，省运费，空运快</td>
               <td>需要看回国的人的日程，时间上不太灵活。并且如果在海关被开箱（虽然可能性比较低）甚至没收，会产生很大问题，责任无法鉴定</td>
-              <td>已经咨询过国内邮政系统的朋友，回复是：小型锂电池放行李托运的问题应该不大，毕竟现在笔记本关机之后也可以放在行李箱托运。<br />已经和张哥确认桐桐的行程中</td>
+              <td>已经咨询过国内邮政系统的朋友，回复是：小型锂电池放行李托运的问题应该不大，毕竟现在笔记本关机之后也可以放在行李箱托运。<br /><b>目前暂时没有带货人选</b>。桐桐可能 9 月底来日本，但始终没有确定</td>
             </tr>
             <tr>
               <th>方案B：京东物流</th>
               <td>以前Beenos工作时认识的合作商，比较可靠的关系。一般小单不接，但因为是认识的，所以这三台可以接</td>
               <td>程序上可靠一些，丢件会有保障</td>
               <td>手续比较繁琐，需要利用Kevin或者张哥的法人名义去签约，手续上的时间比较久，但是后续如果有其他产品需要就方便了</td>
-              <td>如果确定，我这里就进入签约进程。<br />需要确认SDS</td>
+              <td><b>本次暂缓。</b>已经和京东谈过，他们要走公对公，而这次是院长私人微信转账，手续对不上、会很麻烦。以后要大批量进货时再启动签约</td>
             </tr>
             <tr>
               <th>方案C：日本邮政EMS</th>
               <td>Kevin推荐，之前寄过数码产品，大部分时候没问题，偶尔被税，但补交后也OK</td>
               <td>可以加保</td>
               <td>可能被税</td>
-              <td>8月26日去确认日本邮政海运能不能处理</td>
+              <td><b>已经在走这条。</b>第 1 台 9月19日 11:02 由 Kevin 在松户市上门取件寄出，国际小包航空便，邮费 2,750 日元。当天 12:30 邮局来电，目前还在等消息。第 2、3 台在墨田区沈家，没问题则下一台 9月20日或 21日寄出</td>
             </tr>
           </tbody>
         </table>
@@ -280,29 +396,34 @@
       <div class="reply">
         <div class="reply-head">什么是 SDS</div>
         <p>SDS 是「安全数据表」，说明一样东西的成分和危险性。物流公司收货前要靠它判断这件货算不算危险品、能不能上飞机或轮船。</p>
-        <p>厂家已经回复说这台机器没有 SDS——因为它是制造臭氧水的装置，本身不是化学品。物流真正要看的是<b>里面那块锂电池的 SDS</b>，这份由电芯厂出，正在跟厂家确认。</p>
+        <p>厂家已经回复说这台机器没有 SDS——因为它是制造臭氧水的装置，本身不是化学品。物流真正要看的是<b>里面那块锂电池的 SDS</b>，这份由电芯厂出，但厂家最后也没能提供。</p>
+        <p><b>所以这条路走到头了。</b>拿不到 SDS 不代表运不了：托运（方案A）本来就用不上这份文件；走京东或 EMS 的话，要看对方肯不肯接受「电池装在设备内、11.5Wh 远低于 100Wh」这个说明来代替。这是接下来要去问的。</p>
       </div>
     </section>
 
-    <section id="s6" class="concl">
-      <h2><span class="num">6</span>结论：怎么选</h2>
-      <p class="lead">我建议，如果有合适的带货人选，第一个商品建议走<b>方案A（熟人托运）</b>。如果想要长期买，需要考虑B和C。</p>
+    <section id="s7" class="concl">
+      <h2><span class="num">7</span>结论：怎么选</h2>
+      <p class="lead">最后走的是<b>方案C（日本邮政）</b>：第 1 台 9月19日已寄出，邮局跟进中。第 2、3 台在东京都墨田区沈家，等第一台消息，没问题则下一台 9月20日或 21日马上寄出。方案A 暂时没有带货人选；方案B 等以后大批量进货再启动签约。</p>
     </section>
 
-    <section id="s7">
-      <h2><span class="num">7</span>请宣宣确认的几件事</h2>
-      <p style="color:var(--muted);">第 1 台已经买了，接下来要定的是怎么带回去。</p>
+    <section id="s8">
+      <h2><span class="num">8</span>请宣宣确认的几件事</h2>
+      <p style="color:var(--muted);">第 1 台 9月19日已上门取件寄出，邮局中午来电后还在等消息。下面这些，等第一台确认走通了再定。</p>
       <div class="ask">
-        <div class="q">1. 第一个是否同意走方案A？</div>
-        <p class="a">如果同意，希望卡在哪一波人：8月底 Kevin 父 / 9月初桐桐 / 9月中郑总 / 10月小游 / 10月底沈。</p>
+        <div class="q">1. 第一台到货后，麻烦确认一下机器和附件是否齐全</div>
+        <p class="a">收到后拍几张照给我，尤其是滤芯和水箱。有缺件我这边好去找厂家。</p>
       </div>
       <div class="ask">
-        <div class="q">2. 要不要现在同时启动方案B的签约？</div>
-        <p class="a">不急用可以先不做。如果后面确定要长期进货，越早用法人名义签，后面越省事。</p>
+        <div class="q">2. 如果被征税，谁来出？</div>
+        <p class="a">国际邮件进关有可能要交行邮税，这个先说清楚，免得到时候临时商量。</p>
       </div>
       <div class="ask">
-        <div class="q">3. 如果走B或C，收货城市和收货人是谁？</div>
-        <p class="a">收货人是杭州的宠物医院院长对吧？</p>
+        <div class="q">3. 下一台按 9月20日或 21日寄，可以吗？</div>
+        <p class="a">第一台邮局消息没问题的话，下一台马上从墨田区寄出。第 3 台仍先留在沈家。</p>
+      </div>
+      <div class="ask">
+        <div class="q">4. 原厂彩盒没寄，转卖会有影响吗？</div>
+        <p class="a">机器本体和全部配件、说明书、充电器都在，<b>唯独没放原厂包装盒</b>，是为了看上去不是全新未拆。如果后面客户在意原包装，剩下两台可以连盒子一起寄。</p>
       </div>
     </section>
 
@@ -369,6 +490,27 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll);
   pickActive();
+  // Thumbnails and document shots open full size in an overlay.
+  const lb = document.createElement('div');
+  lb.className = 'lb';
+  lb.innerHTML = '<button class="lb-close" aria-label="关闭">×</button><img alt="" /><div class="lb-cap"></div>';
+  document.body.appendChild(lb);
+  const lbImg = lb.querySelector('img');
+  const lbCap = lb.querySelector('.lb-cap');
+
+  function closeLb() { lb.classList.remove('open'); lbImg.removeAttribute('src'); }
+
+  document.querySelectorAll('.gallery .thumb img, .shot img').forEach(img => {
+    img.addEventListener('click', () => {
+      lbImg.src = img.currentSrc || img.src;
+      const fig = img.closest('figure');
+      lbCap.textContent = fig ? (fig.querySelector('figcaption') || {}).textContent || '' : '';
+      lb.classList.add('open');
+    });
+  });
+
+  lb.addEventListener('click', e => { if (e.target !== lbImg) closeLb(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
 </script>
 </body>
 </html>

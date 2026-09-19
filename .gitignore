@@ -1,0 +1,11 @@
+# 含申报单、住址、电话等私人信息，绝对不要提交到公开仓库
+私人资料-不上传/
+private/
+
+# 本地草稿与生成脚本
+make_brief.py
+make_draft.py
+*.docx
+*.pdf
+preview-local.png
+.vercel/
